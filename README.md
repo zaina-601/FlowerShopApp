@@ -1,6 +1,6 @@
 #  Flower Shop - A React Native E-Commerce App
 
-![Flower Shop App Banner](https://i.ibb.co/L8y2zVb/flower-shop-banner.png)
+![Flower Shop App Banner](assets/images/banner.jpeg)
 
 A beautiful and fully functional mobile e-commerce application for a flower shop, built with **React Native** and powered by a complete **Firebase** backend. This project showcases a modern, feature-rich mobile shopping experience, from browsing products to placing orders.
 
