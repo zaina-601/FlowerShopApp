@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
-// --- FIX: Import 'where' and 'query' ---
 import { collection, onSnapshot, query, where, orderBy } from 'firebase/firestore';
 import { db, auth } from '../../firebaseConfig';
 import { styles as globalStyles } from '../../styles';
@@ -16,27 +15,22 @@ export default function OrderHistoryScreen() {
       return;
     }
 
-    // --- THIS IS THE CORRECTED LOGIC ---
-    // 1. Point to the top-level 'orders' collection (1 segment - valid).
     const ordersCollectionRef = collection(db, 'orders');
 
-    // 2. Create a query to filter documents where the 'userId' field matches the current user's ID.
     const q = query(
       ordersCollectionRef,
-      where("userId", "==", userId), // Filter by the userId field
-      orderBy('createdAt', 'desc') // Show newest orders first
+      where("userId", "==", userId),
+      orderBy('createdAt', 'desc')
     );
 
-    // 3. Listen for changes to the results of this query.
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const fetchedOrders = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       setOrders(fetchedOrders);
       setLoading(false);
     });
 
-    // Cleanup subscription on unmount
     return () => unsubscribe();
-  }, [userId]); // Re-run if the user ID changes (e.g., re-login)
+  }, [userId]);
 
   if (loading) {
     return <ActivityIndicator size="large" color="#2E7D32" style={globalStyles.loadingContainer} />;
@@ -86,7 +80,6 @@ export default function OrderHistoryScreen() {
   );
 }
 
-// Local styles for this screen
 const styles = StyleSheet.create({
     list: {
         padding: 10,
@@ -127,14 +120,14 @@ const styles = StyleSheet.create({
         paddingVertical: 4,
         paddingHorizontal: 8,
         borderRadius: 12,
-        overflow: 'hidden', // Ensures background color respects border radius
+        overflow: 'hidden',
     },
     statusPlaced: {
-        backgroundColor: '#e0f2fe', // Light blue
+        backgroundColor: '#e0f2fe',
         color: '#0284c7',
     },
     statusDelivered: {
-        backgroundColor: '#dcfce7', // Light green
+        backgroundColor: '#dcfce7',
         color: '#16a34a',
     },
     itemsList: {

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import { Link } from 'expo-router';
-import { auth } from '../../firebaseConfig'; // <-- CORRECT: Import the shared auth instance
+import { auth } from '../../firebaseConfig';
 import { styles } from '../../styles';
 
 export default function SignupScreen() {
@@ -10,7 +10,6 @@ export default function SignupScreen() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  // REMOVED: const auth = getAuth();
 
   const handleSignup = async () => {
     if (!email || !password || !confirmPassword) {

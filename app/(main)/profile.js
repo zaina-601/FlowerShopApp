@@ -160,14 +160,13 @@ const styles = StyleSheet.create({
   },
   actionButtonText: {
     fontSize: 16,
-    color: '#3b82f6', // Blue
+    color: '#3b82f6',
     marginLeft: 15,
     fontWeight: '600',
   },
   logoutButton: {
-    // No specific style needed unless different from actionButton
   },
   logoutButtonText: {
-    color: '#ef4444', // Red
+    color: '#ef4444',
   },
 });

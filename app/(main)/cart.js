@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// --- FIX #1: Added Alert to the import list ---
 import { View, Text, FlatList, Image, TouchableOpacity, StyleSheet, ActivityIndicator, Alert } from 'react-native';
 import { collection, onSnapshot, doc, deleteDoc, addDoc, writeBatch } from 'firebase/firestore';
 import { db, auth } from '../../firebaseConfig';
@@ -40,9 +39,8 @@ export default function CartScreen() {
   };
 
   const handleCheckout = async () => {
-    // --- FIX #2: Add the userId directly to the order object ---
     const order = {
-      userId: userId, // Keep track of who placed the order
+      userId: userId,
       items: cartItems,
       total: calculateTotal(),
       createdAt: new Date(),
@@ -50,10 +48,8 @@ export default function CartScreen() {
     };
 
     try {
-      // Create a new order in the top-level 'orders' collection
       await addDoc(collection(db, 'orders'), order);
 
-      // Clear the cart
       const batch = writeBatch(db);
       cartItems.forEach(item => {
         const docRef = doc(db, 'carts', userId, 'items', item.id);
@@ -114,7 +110,6 @@ export default function CartScreen() {
       />
       <View style={styles.footer}>
         <Text style={styles.totalText}>Total: ${calculateTotal()}</Text>
-        {/* --- FIX #3: Added the onPress prop to the button --- */}
         <TouchableOpacity style={styles.checkoutButton} onPress={handleCheckout}>
           <Text style={styles.checkoutButtonText}>Proceed to Checkout</Text>
         </TouchableOpacity>
@@ -123,7 +118,6 @@ export default function CartScreen() {
   );
 }
 
-// --- Styles remain the same ---
 const styles = StyleSheet.create({
   container: {
     flex: 1,

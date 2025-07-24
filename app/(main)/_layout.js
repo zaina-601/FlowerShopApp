@@ -1,6 +1,6 @@
 import React from 'react';
 import { Drawer } from 'expo-router/drawer';
-import { Ionicons } from '@expo/vector-icons'; // Using a nice icon library
+import { Ionicons } from '@expo/vector-icons';
 
 export default function MainLayout() {
   return (
@@ -64,7 +64,6 @@ export default function MainLayout() {
         }}
       />
 
-      {/* This hides the product details page from the drawer menu */}
       <Drawer.Screen name="[id]" options={{ drawerItemStyle: { display: 'none' }, title: 'Details' }} />
     </Drawer>
   );

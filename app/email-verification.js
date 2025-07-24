@@ -25,7 +25,7 @@ export default function EmailVerificationScreen() {
   const handleCheckVerification = async () => {
     setLoading(true);
     try {
-      await reload(auth.currentUser); // Pass the most up-to-date user object
+      await reload(auth.currentUser);
 
       if (auth.currentUser.emailVerified) {
         Alert.alert('Success', 'Email verified! Welcome to Flower Shop!');

@@ -3,28 +3,24 @@ import { View, Text, ScrollView, Image, TouchableOpacity, ActivityIndicator, Tex
 import { Link } from 'expo-router';
 import { collection, getDocs, where, query } from 'firebase/firestore';
 import { db } from '../../firebaseConfig';
-import { styles as globalStyles } from '../../styles'; // Using our shared global styles
+import { styles as globalStyles } from '../../styles';
 
 export default function HomeScreen() {
   const [flowers, setFlowers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
 
-  // This useEffect handles fetching flowers and re-fetching when the search query changes.
   useEffect(() => {
     const fetchFlowers = async () => {
       setLoading(true);
       const flowersCollection = collection(db, "flowers");
-      let q; // This will hold our final query
+      let q;
 
       const trimmedQuery = searchQuery.trim();
 
       if (trimmedQuery === '') {
-        // If the search bar is empty, fetch all flowers
         q = query(flowersCollection);
       } else {
-        // If there's a search term, build a "starts with" query.
-        // This query finds names that start with the search term (e.g., "Rose" matches "Roses").
         const endStr = trimmedQuery.slice(0, -1) + String.fromCharCode(trimmedQuery.charCodeAt(trimmedQuery.length - 1) + 1);
         q = query(
           flowersCollection,
@@ -44,14 +40,12 @@ export default function HomeScreen() {
       }
     };
 
-    // This debouncing logic is excellent! It waits 300ms after the user stops typing to start the search.
     const debounceFetch = setTimeout(() => {
       fetchFlowers();
     }, 300);
 
-    // This cleanup function cancels the timeout if the user types again, preventing extra searches.
     return () => clearTimeout(debounceFetch);
-  }, [searchQuery]); // The effect re-runs whenever the user types in the search bar.
+  }, [searchQuery]);
 
   return (
     <ScrollView style={globalStyles.homeContainer} keyboardShouldPersistTaps="handled">
@@ -77,7 +71,6 @@ export default function HomeScreen() {
 
         <Text style={globalStyles.sectionTitle}>Featured Flowers</Text>
 
-        {/* This logic shows a loading spinner, a "no results" message, or the flower grid */}
         {loading ? (
           <ActivityIndicator size="large" color="#2E7D32" style={{ marginTop: 50 }} />
         ) : flowers.length === 0 ? (
@@ -103,10 +96,9 @@ export default function HomeScreen() {
   );
 }
 
-// Local styles specific to this screen
 const styles = StyleSheet.create({
   searchInput: {
-    ...globalStyles.input, // Reuse your global input style
+    ...globalStyles.input,
     marginBottom: 20,
   },
   noResultsText: {

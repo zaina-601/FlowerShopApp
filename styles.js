@@ -168,7 +168,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   flowerCard: {
-    width: (width - 50) / 2, // 20 padding left, 20 right, 10 space between
+    width: (width - 50) / 2,
     backgroundColor: 'white',
     borderRadius: 15,
     marginBottom: 20,
